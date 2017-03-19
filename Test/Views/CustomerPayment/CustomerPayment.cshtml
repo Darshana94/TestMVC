@@ -1,0 +1,352 @@
+﻿@model IEnumerable<Test.Models.Bill>
+
+@{
+    ViewBag.Title = "CustomerPayment";
+}
+
+<section class="content-header">
+    <h1>
+        Payments
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li class="active"><a href="#">Payments</a></li>
+    </ol>
+</section>
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-xs-12 col-md-10">
+            <form class="form-horizontal">
+
+                <div class="form-group">
+                    <label class="control-label col-xs-2" for="route">Route :</label>
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" id="route">
+                    </div>
+                    <label class="control-label col-xs-2" for="employee">Employee :</label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" id="employee">
+                    </div>
+                                       
+
+                </div>
+                </form>
+        </div>
+    </div>
+    <div class="box box-info">
+        <!-- /.box-header -->
+        <br/>
+        <div class="row">
+            <div class="col-xs-12 col-md-10">
+                <form class="form-horizontal">
+
+                 @using (@Html.BeginForm("GetStudents", "CustomerPayment"))
+                 {
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="no">Customer :</label>
+                        <div class="col-md-3">
+                           @Html.TextBox("searchTerm", null, new { id = "txtSearch" })
+                                                        
+                        </div>
+                        <div class="col-md-1">
+                        <button type="submit" value="Search" class="btn btn-success">+</button>
+                        </div>
+                        <label class="control-label col-md-2" for="no">No :</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control input-md" id="no">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="ref">Total :</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control input-md" id="ref">
+                        </div>
+
+                        <label class="control-label col-md-2 col-md-offset-2" for="date">Date:</label>
+                        <div class="col-md-3">
+                            <div class="input-group date">
+                                <input type="text" class="form-control pull-right" id="PymDate">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  }
+                </form>
+            </div>
+        </div>
+    </div>
+       <!-- table -->
+
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Bills</h3>
+
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table id="ple2" class="table table-hover">
+                    <tr>
+                        <th>Bill_No</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Balance</th>
+                        <th>&nbsp;</th>
+                        <th>Net_Balance</th>
+                    </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BillID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Balance)
+                        </td>
+                        <td>
+                            <input type="text">
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Net_Balance)
+                        </td>
+                    </tr>
+                }
+               </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+
+        <!-- /.box-header -->
+        
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12 col-md-10">
+                <div class="col-md-2">
+                    <button type="button" class="btn  btn-primary btn-block" id="myBtn">Save</button>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn  btn-primary btn-block">New</button>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn  btn-primary btn-block">Delete</button>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn  btn-primary btn-block">Print</button>
+                </div>
+
+            </div>
+        </div>
+
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="padding:15px 50px;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2>Payment Methods</h2>
+
+            </div>
+            <div class="modal-body" style="padding:40px 50px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Custom Tabs (Pulled to the right) -->
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab_1" data-toggle="tab">Cash</a></li>
+                                <li><a href="#tab_2" data-toggle="tab">Cheque</a></li>
+                                <li><a href="#tab_3" data-toggle="tab">Credit Card</a></li>
+
+                            </ul>
+                   
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1">
+
+                                    <form class="form-horizontal">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Amount</label>
+                                                <div class="input-group col-sm-10">
+                                                    <input type="text" class="form-control" id="input">
+                                                    <span class="input-group-addon">.00</span>
+                                                </div>
+                                            </div>
+                                            
+
+                                        </div>
+                                        <!-- /.box-body -->
+                                        <div class="box-footer">
+                                            <button type="submit" class="btn btn-success pull-right" id="confirm-purchase">Confirm</button>
+                                        </div>
+                                        <!-- /.box-footer -->
+                                    </form>
+
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_2">
+
+                                    <form class="form-horizontal">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Cheque Date</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="Chq-Date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Bank</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="Bank">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Branch</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="Branch">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Cheque No</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="chequeNo">   
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Amount</label>
+                                                <div class="input-group col-sm-10">
+                                                    <input type="text" class="form-control" id="amount2">
+                                                    <span class="input-group-addon">.00</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- /.box-body -->
+                                        <div class="box-footer">
+                                            <button type="submit" class="btn btn-success pull-right" id="confirm-purchase">Confirm</button>
+                                        </div>
+                                        <!-- /.box-footer -->
+                                    </form>
+
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_3">
+
+                                    <form class="form-horizontal">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Owner</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="Owner">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">CVV</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="CVV">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Card Number</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="CardNumber">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Expiration Date</label>
+                                                <div class="col-sm-10">
+                                                    <select>
+                                                        <option value="01">January</option>
+                                                        <option value="02">February </option>
+                                                        <option value="03">March</option>
+                                                        <option value="04">April</option>
+                                                        <option value="05">May</option>
+                                                        <option value="06">June</option>
+                                                        <option value="07">July</option>
+                                                        <option value="08">August</option>
+                                                        <option value="09">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">December</option>
+                                                    </select>
+                                                    <select>
+                                                        <option value="16"> 2016</option>
+                                                        <option value="17"> 2017</option>
+                                                        <option value="18"> 2018</option>
+                                                        <option value="19"> 2019</option>
+                                                        <option value="20"> 2020</option>
+                                                        <option value="21"> 2021</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- /.box-body -->
+                                        <div class="box-footer">
+                                            <img src="~/img/cards.jpg">
+                                            <button type="submit" class="btn btn-success pull-right" id="confirm-purchase">Confirm</button>
+                                        </div>
+                                        <!-- /.box-footer -->
+                                    </form>
+
+
+
+                                    <!-- /.tab-pane -->
+                                </div>
+                                
+                                <!-- /.tab-content -->
+                            </div>
+                            <!-- nav-tabs-custom -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetCustomers")',
+            minLength: 1
+        });
+    });
+</script>
+
+<script>
+        $(document).ready(function () {
+            $("#myBtn").click(function () {
+                $("#myModal").modal();
+            });
+        });
+
+        $(function () {
+            //Date picker
+            $('#Chq-Date').datepicker({
+                autoclose: true
+            });
+            $('#PymDate').datepicker({
+                autoclose: true
+            });
+        });
+</script>
